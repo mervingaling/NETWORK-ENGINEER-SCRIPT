@@ -1,0 +1,279 @@
+Day2. Task1.
+1. Repetition is the mother
+of all skills:
+- switch: 
+- cucm:
+- edge:
+
+Task2: What 3 Letters that will make
+       your HR file/resume = promoted/
+       pirated
+              IPv4  IPv6
+promotion/jobInterview
+questions for N.E,S.E,CyberSc:
+Q1: what are public IP address and private
+ip address.
+Public IP address are Internet PingableIP/
+routable IP address.
+208.67.222.222
+208.67.220.220
+8.8.8.8
+1.1.1.1
+4.2.2.2
+
+What are Traceable IP Address:
+tracert www.x-art.com
+
+Q2: Private IP address are IP give to connect
+    to local network.
+   big/large:  10.0.0.0/8 -> 16,777,214 ip address.
+  
+   medium:    172.16.0.0/16 -> 64,534 ip address
+
+   home:   192.168.0-254.0/24 -> 254 ip address
+
+Q3: what are the Five ClassFulles of IP address:
+          "route print"
+specialAddress; 0.0.0.0:defRoute   
+            &  127.0.0.1: loopback
+A = 1-126
+B = 128-191
+C = 192-223
+D = 224-239
+E = 240-255
+
+TASK3: how a network/systems/Prog engineer looks 
+       at numbers:
+  DEC:		bin:		hex:
+  0-255         0 1            0-9,a-f
+
+TASK4: Bit Length:
+
+195 = 8b
+13 =  4b
+1750 =  11b
+1855 =  11b
+2,700 =  12b
+2 =  2b
+376 =  9b
+888 = 10b
+8 = 4b
+212 = 8b 
+4,500 = 13b
+81 = 7b
+20,000  = 15b  
+55 = 6b
+
+TASK5: Subnetting:
+Large: 10.0.0..0/8 -> 16M
+Med:   172.16.0.0/16 -> 65k
+Pobre: 192.168.1.0/24 -> 254
+
+Ex.5.1: Design and Configure sykesasia.com
+call center with 1750 Agents,Tls,QAs,Pm. using
+10.0.0.0/8:HowToSubnet: WorldMethod: vs 
+RivanFigerningMethod: RFM: 
+
+ConvertIT: 1750 Agents = 11b
+SubractIT: /32 - /11b = /21-> 3rd,8i
+iPasokitSaHiwa: "iPasok 8i sa 3rd Octet"x2
+
+AccentureSubnet: 10.0.8.0/21
+1st valid:        10.0.8.1
+lastIP/broadcast: 10.0.15.255
+NotAccenture: 10.0.16.0 /21
+
+Ex.5.2: Design and Configure sykesasia.com
+call center with 2750 Agents,Tls,QAs,Pm. using
+10.0.0.0/8:HowToSubnet: WorldMethod: vs 
+RivanFigerningMethod: RFM: 
+
+ConvertIT: 2750 Agents = 12b
+SubractIT: /32 - /12b = /20-> 3rd,16i
+iPasokitSaHiwa: "iPasok 8i sa 3rd Octet"x2
+
+AccentureSubnet: 10.0.16.0/21
+1st valid:        10.0.16.1
+lastIP/broadcast: 10.0.31.255
+NotAccenture: 10.0.32.0 /21
+
+TemPlate_CoreSW:
+config t
+vlan 25
+ name sykesasia.com
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.4.1 255.255.252.0
+ip dhcp excluded-add 10.0.4.1 10.0.4.100
+ip dhcp pool sykesasia.com
+ network 10.0.4.0 255.255.252.0
+ default-router 10.0.4.1
+ domain-name sykesasia.com
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/5
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+
+
+config t
+vlan 25
+ name TELUSph.com
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.32.1 255.255.224.0
+ip dhcp excluded-add 10.0.32.1 10.0.32.100
+ip dhcp pool TELUSph.com
+ network 10.0.32.0 255.255.224.0
+ default-router 10.0.32.1
+ domain-name TELUSph.com
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+
+config t
+vlan 25
+ name PNP.GOV.PH
+ exit
+Int vlan 25
+ no shut
+ip add 10.0.2.1 255.255.254.0
+ip dhcp excluded-add 10.0.2.1 10.0.2.100
+ip dhcp pool PNP.GOV.PH
+ network 10.0.2.0 255.255.254.0
+ default-router 10.0.2.1
+ domain-name PNP.GOV.PH
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/5
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+
+
+
+config t
+vlan 25
+ name BULSU.EDU.PH
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.16.1 255.255.240.0
+ip dhcp excluded-add 10.0.16.1 10.0.16.100
+ip dhcp pool BULSU.EDU.PH
+ network 10.0.16.1 255.255.240.0
+ default-router 10.0.16.0
+ domain-name BULSU.EDU.PH
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi acc vlan 25
+ Int Fa 0/5
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+config t
+vlan 25
+ name ARMY.MIL.PH
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.1.1 255.255.255.0
+ip dhcp excluded-add 10.0.1.1 10.0.1.100
+ip dhcp pool ARMY.MIL.PH
+ network 10.0.1.0 255.255.255.0
+ default-router 10.0.1.1
+ domain-name ARMY.MIL.PH
+ dns-server 10.0.1.10
+ option 150 ip 10.0.100.8
+ Int E 1/0
+  swi mode access
+  swi acc vlan 25
+  do sh ip dhcp binding
+
+@s1
+config t
+int e1/0
+no shut
+ip add dhcp
+
+D1
+config t
+ipv6 enable
+ipv6 cafe:face:cafe:face::2aaa/64
+
+
+
+
+
+METHOD 1 :  Static Addressing
+D1
+config t
+ipv6 unicast-routing
+int e1/0
+no switchport
+ipv6 enable
+ipv6 add cafe:face:cafe:face::2aaa/64
+
+s1
+config t
+ipv6 unicast-routing
+int e1/0
+ipv6 enable
+ipv6 add cafe:face:cafe:face::2bbb/64
+
+
+
+
+
+
+METHOD 2 : IPV6 EUI-64 Bit Address, AUTOMATIC Host Address
+
+D1 :
+Config
+ipv6 unicast-routing
+int vlan 25
+ipv6 enable
+ipv6 add baba:caca:dada:dada::/64 eui-64
+
+
+S1 :
+Config t
+ipv6 unicast-routing
+int e1/0
+ipv6 enable
+ipv6 add baba:caca:dada:dada::/64 eui-64
+
+end
+
+
+
+
+sh ipv6 int e1/0
+BABA:CACA:DADA:DADA:A8BB:CCFF:FE00:501
+CAFE:FACE:CAFE:FACE::2BBB
+
+
+
+
+
+3RD METHOD : Easy Method AUTOCONFIG
+D1
+Config t
+ipv6 unicast-routing
+int vlan 25
+ipv6 enable
+ipv6 Address Autoconfig
+
+S1
+Config t
+ipv6 unicast-routing
+int e1/0
+ipv6 enable
+ipv6 Address Autoconfig
